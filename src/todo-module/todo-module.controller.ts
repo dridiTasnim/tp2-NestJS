@@ -27,20 +27,15 @@ export class TodoController{
         return this.todoService.getTodoByID(id);
     }
 
-    @Delete('/:id')
-    deleteTodoByID(@Param('id', ParseIntPipe) id : number){
-        return this.todoService.deleteTodoByID(id);
-    }
-
-    @Delete('/:id')
+    @Get('/:id')
     @Version('2')
-    async deleteTodoByIDv2(@Param('id', ParseIntPipe) id : number){
-        return await this.todoService.deleteTodoByIDv2(id);
+    async getTodoByIDv2(@Param('id', ParseIntPipe) id : number){
+        return await this.todoService.getTodoByIDv2(id);
     }
 
-    @Delete('/softDelete/:id')
-    async softDeleteTodoByID(@Param('id', ParseIntPipe) id : number){
-        return await this.todoService.softDeleteTodoByID(id);
+    @Get('/:page/:take')
+    async getTodosPaginated(@Param() params){
+        return await this.todoService.getTodosPaginated(params);
     }
 
     @Get('/restore/:id')
@@ -55,11 +50,18 @@ export class TodoController{
         return await this.todoService.getTodov3(status,data);
     }
 
-    @Get('/count')
+    @Get('/param?')
+    @Version('4')
+    async getTodoByStatusAndData(@Query() queryParam: ParamDto): Promise<TodoEntity[]> {
+        const {status,data}=queryParam;
+        return await this.todoService.getTodoByStatusAndData(status,data);
+    }
+
+    /*@Get('/count')
     @Version('2')
     countTodoByStatus() {
         return this.todoService.countByStatus()
-    }
+    }*/
 
     @Post()
     @Version('1')
@@ -82,5 +84,21 @@ export class TodoController{
     @Version('2')
     async updateTodoDtov2(@Param('id',ParseIntPipe) id: number, @Body() updateTodoDto:UpdateTodoDto ) : Promise<TodoEntity>{
           return await this.todoService.updateTodoDtov2(id,updateTodoDto);
+    }
+
+    @Delete('/:id')
+    deleteTodoByID(@Param('id', ParseIntPipe) id : number){
+        return this.todoService.deleteTodoByID(id);
+    }
+
+    @Delete('/:id')
+    @Version('2')
+    async deleteTodoByIDv2(@Param('id', ParseIntPipe) id : number){
+        return await this.todoService.deleteTodoByIDv2(id);
+    }
+
+    @Delete('/softDelete/:id')
+    async softDeleteTodoByID(@Param('id', ParseIntPipe) id : number){
+        return await this.todoService.softDeleteTodoByID(id);
     }
 }

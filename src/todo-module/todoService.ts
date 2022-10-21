@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { TodoEntity } from './entities/todo.entity';
@@ -30,6 +30,10 @@ export class TodoService {
         return await this.todoRepository.find();
     }
 
+    async getTodosPaginated(param): Promise<TodoEntity[]> {
+        return await this.todoRepository.find({skip:(param.page-1)*param.take, take: param.take });
+    }
+
     async getTodov3(statusParam, data): Promise<TodoEntity[]> {
         return await this.todoRepository.find({
             where: [
@@ -48,8 +52,29 @@ export class TodoService {
         });
     }
 
+    async getTodoByStatusAndData(statusParam, data): Promise<TodoEntity[]> {
+        return await this.todoRepository.find({
+            where: [
+                {
+                    name: Like(`%${data}%`),
+                },
+                {
+                    description: Like(`%${data}%`),
+                    status: statusParam,
+                }
+
+            ]
+        });
+    }
+
     getTodoByID(id: number) {
         return this.findByID(id);
+    }
+
+    async getTodoByIDv2(id: number): Promise<TodoEntity> {
+        const todo = await this.todoRepository.findOne({ where: [{ id: id }] });
+        if (!todo) throw new BadRequestException;
+        return todo;
     }
 
     deleteTodoByID(id: number) {
