@@ -31,10 +31,19 @@ export class TodoService {
     }
 
     async getTodosPaginated(param): Promise<TodoEntity[]> {
-        return await this.todoRepository.find({skip:(param.page-1)*param.take, take: param.take });
+        return await this.todoRepository.find({ skip: (param.page - 1) * param.take, take: param.take });
     }
 
     async getTodov3(statusParam, data): Promise<TodoEntity[]> {
+        const qb= this.todoRepository.createQueryBuilder("TodoEntity");
+        qb.where(`TodoEntity.name LIKE "%${data}%" `, { data: data })
+        .orWhere(`TodoEntity.description LIKE "%${data}%" `, { data: data })
+        .orWhere("TodoEntity.status= :statusParam", { statusParam: statusParam });
+        if(! qb.getMany()) throw new NotFoundException();
+        return await qb.getMany();
+    }
+
+    /*async getTodov3(statusParam, data): Promise<TodoEntity[]> {
         return await this.todoRepository.find({
             where: [
                 {
@@ -50,7 +59,7 @@ export class TodoService {
 
             ]
         });
-    }
+    }*/
 
     async getTodoByStatusAndData(statusParam, data): Promise<TodoEntity[]> {
         return await this.todoRepository.find({
