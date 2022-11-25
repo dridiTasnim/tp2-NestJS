@@ -1,5 +1,5 @@
 import { timeStamp } from "console";
-import { TimeStamp } from "src/date-management/time-stamp";
+import { TimeStamp } from "../../date-management/time-stamp";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TodoStatusEnum } from "../todo-status-enum";
 
