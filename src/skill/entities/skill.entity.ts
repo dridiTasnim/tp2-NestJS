@@ -1,12 +1,11 @@
 import { Cv } from "../../cv/entities/cv.entity";
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { v4 as idv4 } from 'uuid';
 
 @Entity()
 export class Skill {
 
-    @PrimaryGeneratedColumn()
-    id = idv4();
+    @PrimaryGeneratedColumn("uuid")
+    id : number;
 
     @Column()
     designation: string;

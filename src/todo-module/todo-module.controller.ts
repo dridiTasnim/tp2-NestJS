@@ -18,8 +18,8 @@ export class TodoController{
 
     @Get()
     @Version('2')
-    async getTodosv2() : Promise<TodoEntity[]>{
-        return await this.todoService.getTodov2();
+    getTodosv2() : Promise<TodoEntity[]>{
+        return  this.todoService.getTodov2();
     }
 
     @Get('/:id')
@@ -71,8 +71,8 @@ export class TodoController{
 
     @Post()
     @Version('2')
-    async addTodoDtov2(@Body() newTodoDto : TodoDto) : Promise<TodoEntity>{
-        return await this.todoService.addTodoDTOv2(newTodoDto);
+    addTodoDtov2(@Body() newTodoDto : TodoDto) : Promise<TodoEntity>{
+        return  this.todoService.addTodoDTOv2(newTodoDto);
     }
 
     @Put('/:id')
@@ -82,7 +82,7 @@ export class TodoController{
 
     @Put('/:id')
     @Version('2')
-    async updateTodoDtov2(@Param('id',ParseIntPipe) id: number, @Body() updateTodoDto:UpdateTodoDto ) : Promise<TodoEntity>{
+    async updateTodoDtov2(@Param('id',ParseIntPipe) id: number, @Body() updateTodoDto:UpdateTodoDto ) {
           return await this.todoService.updateTodoDtov2(id,updateTodoDto);
     }
 

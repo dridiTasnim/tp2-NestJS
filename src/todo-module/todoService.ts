@@ -26,8 +26,8 @@ export class TodoService {
         return this.todos;
     }
 
-    async getTodov2(): Promise<TodoEntity[]> {
-        return await this.todoRepository.find();
+    getTodov2(): Promise<TodoEntity[]> {
+        return this.todoRepository.find();
     }
 
     async getTodosPaginated(param): Promise<TodoEntity[]> {
@@ -118,8 +118,8 @@ export class TodoService {
         return 'todo is added';
     }
 
-    async addTodoDTOv2(newTodoDto: TodoDto): Promise<TodoEntity> {
-        return await this.todoRepository.save(newTodoDto);
+     addTodoDTOv2(newTodoDto: TodoDto): Promise<TodoEntity> {
+        return  this.todoRepository.save(newTodoDto);
     }
 
     updateTodoDto(id: number, updateTodoDto: UpdateTodoDto) {
@@ -130,7 +130,7 @@ export class TodoService {
         return todo;
     }
 
-    async updateTodoDtov2(id: number, updateTodoDto: UpdateTodoDto): Promise<TodoEntity> {
+    async updateTodoDtov2(id: number, updateTodoDto: UpdateTodoDto) {
 
         const newTodo = await this.todoRepository.preload({ id, ...updateTodoDto });
         if (!newTodo) throw new NotFoundException;

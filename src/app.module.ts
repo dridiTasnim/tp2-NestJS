@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {PremierModule} from './premier/premier.module';
 import { TodoModuleModule } from './todo-module/todo-module.module';
-import { CommonModule } from './common-module/common-module.module';
+import { CommonModule } from './common/common-module.module';
 import { CustomPipeController } from './custom-pipe/custom-pipe.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoEntity } from './todo-module/entities/todo.entity';

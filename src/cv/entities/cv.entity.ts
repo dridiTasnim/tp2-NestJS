@@ -1,11 +1,11 @@
 import { User } from "../../user/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { v4 as idv4 } from 'uuid';
 
 @Entity()
 export class Cv {
-    @PrimaryGeneratedColumn()
-    id = idv4();
+
+    @PrimaryGeneratedColumn("uuid")
+    id : number;
 
     @Column()
     name: string;
